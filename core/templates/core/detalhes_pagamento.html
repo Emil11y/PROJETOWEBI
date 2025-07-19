@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalhes do Pagamento #{{ pagamento.id_pagamento }}{% endblock %}
+
+{% block content %}
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h1 class="h4 mb-0">Detalhes do Pagamento #{{ pagamento.id_pagamento }}</h1>
+        </div>
+        <div class="card-body">
+            <p><strong>Locação Relacionada:</strong> 
+               <a href="{% url 'detalhes_locacao' pk=pagamento.locacao.pk %}">
+                   #{{ pagamento.locacao.id_locacao }} - Cliente: {{ pagamento.locacao.cliente.nome }} (Veículo: {{ pagamento.locacao.veiculo.placa }})
+               </a>
+            </p>
+            <hr>
+            <p><strong>Valor Pago:</strong> R$ {{ pagamento.valor_pago|floatformat:2 }}</p>
+            <p><strong>Data do Pagamento:</strong> {{ pagamento.data_pagamento|date:"d/m/Y H:i" }}</p>
+            <p><strong>Método de Pagamento:</strong> {{ pagamento.metodo_pagamento }}</p>
+            <p><strong>Status do Pagamento:</strong> <span class="badge bg-info">{{ pagamento.status_pagamento }}</span></p>
+            <p><strong>Observações:</strong> {{ pagamento.observacoes|default:"Nenhuma" }}</p>
+        </div>
+        <div class="card-footer d-flex justify-content-end">
+            <a href="{% url 'editar_pagamento' pk=pagamento.pk %}" class="btn btn-warning me-2">
+                <i class="fas fa-edit me-1"></i> Editar
+            </a>
+            <a href="{% url 'lista_pagamentos' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-1"></i> Voltar para a Lista
+            </a>
+        </div>
+    </div>
+{% endblock %}

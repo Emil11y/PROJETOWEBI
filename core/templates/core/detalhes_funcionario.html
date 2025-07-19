@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalhes do Funcionário: {{ funcionario.nome }} {{ funcionario.sobrenome }}{% endblock %}
+
+{% block content %}
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h1 class="h4 mb-0">Detalhes do Funcionário</h1>
+        </div>
+        <div class="card-body">
+            <p><strong>Nome Completo:</strong> {{ funcionario.nome }} {{ funcionario.sobrenome }}</p>
+            <p><strong>CPF:</strong> {{ funcionario.cpf }}</p>
+            <p><strong>Email:</strong> {{ funcionario.email }}</p>
+            <p><strong>Telefone:</strong> {{ funcionario.telefone }}</p>
+            <p><strong>Cargo:</strong> {{ funcionario.cargo }}</p>
+            <p><strong>Salário:</strong> R$ {{ funcionario.salario|floatformat:2 }}</p>
+            <p><strong>Data de Contratação:</strong> {{ funcionario.data_contratacao|date:"d/m/Y" }}</p>
+        </div>
+        <div class="card-footer d-flex justify-content-end">
+            <a href="{% url 'editar_funcionario' pk=funcionario.pk %}" class="btn btn-warning me-2">
+                <i class="fas fa-edit me-1"></i> Editar
+            </a>
+            <a href="{% url 'lista_funcionarios' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-1"></i> Voltar para a Lista
+            </a>
+        </div>
+    </div>
+{% endblock %}

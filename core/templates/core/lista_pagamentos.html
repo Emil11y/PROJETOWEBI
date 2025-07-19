@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Pagamentos{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0">Pagamentos Registrados</h1>
+        <a href="{% url 'adicionar_pagamento' %}" class="btn btn-primary">
+            <i class="fas fa-plus-circle me-2"></i> Adicionar Novo Pagamento
+        </a>
+    </div>
+    <div class="mb-4">
+        <form class="d-flex" method="GET" action="{% url 'lista_pagamentos' %}">
+            <input class="form-control me-2" type="search" placeholder="Buscar por cliente, veículo, forma de pag. ou valor" aria-label="Search" name="q" value="{{ query|default:'' }}">
+            <button class="btn btn-outline-success" type="submit">Buscar</button>
+            {% if query %} {# Botão para limpar a busca se houver uma ativa #}
+                <a href="{% url 'lista_pagamentos' %}" class="btn btn-outline-secondary ms-2">Limpar Busca</a>
+            {% endif %}
+        </form>
+    </div>
+
+    {% if pagamentos %}
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID Pgto</th>
+                        <th>Locação ID</th>
+                        <th>Cliente</th>
+                        <th>Valor Pago</th>
+                        <th>Data Pagamento</th>
+                        <th>Método</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pagamento in pagamentos %}
+                    <tr>
+                        <td>{{ pagamento.id_pagamento }}</td>
+                        <td>
+                            <a href="{% url 'detalhes_locacao' pk=pagamento.locacao.pk %}">
+                                #{{ pagamento.locacao.id_locacao }}
+                            </a>
+                        </td>
+                        <td>{{ pagamento.locacao.cliente.nome }}</td> {# Acessa o cliente da locação #}
+                        <td>R$ {{ pagamento.valor_pago|floatformat:2 }}</td>
+                        <td>{{ pagamento.data_pagamento|date:"d/m/Y H:i" }}</td>
+                        <td>{{ pagamento.metodo_pagamento }}</td>
+                        <td><span class="badge bg-info">{{ pagamento.status_pagamento }}</span></td>
+                        <td>
+                            <a href="{% url 'detalhes_pagamento' pk=pagamento.pk %}" class="btn btn-info btn-sm me-1" title="Ver Detalhes">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a href="{% url 'editar_pagamento' pk=pagamento.pk %}" class="btn btn-warning btn-sm me-1" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="{% url 'excluir_pagamento' pk=pagamento.pk %}" class="btn btn-danger btn-sm" title="Excluir">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            Nenhum pagamento registrado ainda. <a href="{% url 'adicionar_pagamento' %}" class="alert-link">Adicionar o primeiro pagamento?</a>
+        </div>
+    {% endif %}
+{% endblock %}

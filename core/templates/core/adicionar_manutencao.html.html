@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %} {# Certifique-se de ter esta linha para usar crispy-forms #}
+
+{% block title %}Adicionar Nova Manutenção{% endblock %}
+
+{% block content %}
+    <div class="card shadow-sm">
+        <div class="card-header bg-success text-white">
+            <h1 class="h4 mb-0">Adicionar Nova Manutenção</h1>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }} 
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-save me-1"></i> Salvar Manutenção
+                    </button>
+                    <a href="{% url 'lista_manutencoes' %}" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-times-circle me-1"></i> Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

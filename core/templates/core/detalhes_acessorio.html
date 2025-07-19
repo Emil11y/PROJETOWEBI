@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalhes do Acessório: {{ acessorio.nome_acessorio }}{% endblock %}
+
+{% block content %}
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h1 class="h4 mb-0">Detalhes do Acessório</h1>
+        </div>
+        <div class="card-body">
+            <p><strong>Nome do Acessório:</strong> {{ acessorio.nome_acessorio }}</p>
+            <p><strong>Valor Diário:</strong> R$ {{ acessorio.valor_diario|floatformat:2 }}</p>
+        </div>
+        <div class="card-footer d-flex justify-content-end">
+            <a href="{% url 'editar_acessorio' pk=acessorio.pk %}" class="btn btn-warning me-2">
+                <i class="fas fa-edit me-1"></i> Editar
+            </a>
+            <a href="{% url 'lista_acessorios' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-1"></i> Voltar para a Lista
+            </a>
+        </div>
+    </div>
+{% endblock %}

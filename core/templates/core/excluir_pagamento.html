@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Excluir Pagamento{% endblock %}
+
+{% block content %}
+    <div class="card shadow-sm border-danger">
+        <div class="card-header bg-danger text-white">
+            <h1 class="h4 mb-0">Confirmar Exclusão de Pagamento</h1>
+        </div>
+        <div class="card-body">
+            <p class="lead">Você tem certeza que deseja excluir o pagamento #<strong>{{ pagamento.id_pagamento }}</strong>?</p>
+            <p>Este pagamento de <strong>R$ {{ pagamento.valor_pago|floatformat:2 }}</strong> está associado à locação #<strong>{{ pagamento.locacao.id_locacao }}</strong> do cliente <strong>{{ pagamento.locacao.cliente.nome }}</strong>.</p>
+            <div class="alert alert-warning" role="alert">
+               
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                    <button type="submit" class="btn btn-danger btn-lg">
+                        <i class="fas fa-trash-alt me-1"></i> Sim, Excluir
+                    </button>
+                    <a href="{% url 'detalhes_pagamento' pk=pagamento.pk %}" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-arrow-left me-1"></i> Não, Voltar
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

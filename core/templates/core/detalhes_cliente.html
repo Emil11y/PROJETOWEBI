@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalhes do Cliente: {{ cliente.nome }} {{ cliente.sobrenome }}{% endblock %}
+
+{% block content %}
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h1 class="h4 mb-0">Detalhes do Cliente</h1>
+        </div>
+        <div class="card-body">
+            <p><strong>Nome Completo:</strong> {{ cliente.nome }} {{ cliente.sobrenome }}</p>
+            <p><strong>CPF:</strong> {{ cliente.cpf }}</p>
+            <p><strong>Email:</strong> {{ cliente.email }}</p>
+            <p><strong>Telefone:</strong> {{ cliente.telefone }}</p>
+            <p><strong>Endereço:</strong> {{ cliente.endereco }}</p>
+            <p><strong>Data de Nascimento:</strong> {{ cliente.data_nascimento|date:"d/m/Y" }}</p> {# Formata a data #}
+            <p><strong>CNH:</strong> {{ cliente.num_cnh|default:"Não informado" }}</p> {# Exibe "Não informado" se campo estiver vazio #}
+            <p><strong>Validade CNH:</strong> {{ cliente.data_val_cnh|date:"d/m/Y"|default:"Não informado" }}</p>
+        </div>
+        <div class="card-footer d-flex justify-content-end">
+            {# Botões de ação #}
+            <a href="{% url 'editar_cliente' pk=cliente.pk %}" class="btn btn-warning me-2">
+                <i class="fas fa-edit me-1"></i> Editar
+            </a>
+            <a href="{% url 'lista_clientes' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-1"></i> Voltar para a Lista
+            </a>
+        </div>
+    </div>
+{% endblock %}

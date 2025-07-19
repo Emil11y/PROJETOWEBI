@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if form.instance.pk %}Editar Locação{% else %}Adicionar Nova Locação{% endif %}{% endblock %}
+
+{% block content %}
+    <div class="card shadow-sm">
+        <div class="card-header bg-success text-white">
+            <h1 class="h4 mb-0">{% if form.instance.pk %}Editar Locação #{{ locacao.id_locacao }}{% else %}Adicionar Nova Locação{% endif %}</h1>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {# Você pode renderizar o formulário como parágrafos, ou com mais controle (campo a campo) #}
+                {{ form.as_p }} 
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-save me-1"></i> Salvar Locação
+                    </button>
+                    <a href="{% url 'lista_locacoes' %}" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-times-circle me-1"></i> Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

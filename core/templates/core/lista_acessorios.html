@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Acessórios{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0">Acessórios Cadastrados</h1>
+        <a href="{% url 'adicionar_acessorio' %}" class="btn btn-primary">
+            <i class="fas fa-plus-circle me-2"></i> Adicionar Novo Acessório
+        </a>
+    </div>
+    <div class="mb-4">
+        <form class="d-flex" method="GET" action="{% url 'lista_acessorios' %}">
+            <input class="form-control me-2" type="search" placeholder="Buscar por nome ou valor diário" aria-label="Search" name="q" value="{{ query|default:'' }}">
+            <button class="btn btn-outline-success" type="submit">Buscar</button>
+            {% if query %} {# Botão para limpar a busca se houver uma ativa #}
+                <a href="{% url 'lista_acessorios' %}" class="btn btn-outline-secondary ms-2">Limpar Busca</a>
+            {% endif %}
+        </form>
+    </div>
+
+    {% if acessorios %}
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Nome do Acessório</th>
+                        <th>Valor Diário</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for acessorio in acessorios %}
+                    <tr>
+                        <td>{{ acessorio.nome_acessorio }}</td>
+                        <td>R$ {{ acessorio.valor_diario|floatformat:2 }}</td>
+                        <td>
+                            <a href="{% url 'detalhes_acessorio' pk=acessorio.pk %}" class="btn btn-info btn-sm me-1" title="Ver Detalhes">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a href="{% url 'editar_acessorio' pk=acessorio.pk %}" class="btn btn-warning btn-sm me-1" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="{% url 'excluir_acessorio' pk=acessorio.pk %}" class="btn btn-danger btn-sm" title="Excluir">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+            Nenhum acessório cadastrado ainda. <a href="{% url 'adicionar_acessorio' %}" class="alert-link">Adicionar o primeiro acessório?</a>
+        </div>
+    {% endif %}
+{% endblock %}

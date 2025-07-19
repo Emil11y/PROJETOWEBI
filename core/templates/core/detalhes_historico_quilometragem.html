@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalhes do Histórico de Quilometragem #{{ historico.id_historico_quilometragem }}{% endblock %}
+
+{% block content %}
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h1 class="h4 mb-0">Detalhes do Registro de Quilometragem #{{ historico.id_historico_quilometragem }}</h1>
+        </div>
+        <div class="card-body">
+            <p><strong>Veículo:</strong> 
+               <a href="{% url 'detalhes_veiculo' pk=historico.veiculo.pk %}">
+                   {{ historico.veiculo.marca }} {{ historico.veiculo.modelo }} (Placa: {{ historico.veiculo.placa }})
+               </a>
+            </p>
+            <hr>
+            <p><strong>Quilometragem Registrada:</strong> {{ historico.quilometragem_registrada|floatformat:2 }} km</p>
+            <p><strong>Data do Registro:</strong> {{ historico.data_registro|date:"d/m/Y H:i" }}</p>
+            <p><strong>Observações:</strong> {{ historico.observacoes|default:"Nenhuma" }}</p>
+        </div>
+        <div class="card-footer d-flex justify-content-end">
+            <a href="{% url 'editar_historico_quilometragem' pk=historico.pk %}" class="btn btn-warning me-2">
+                <i class="fas fa-edit me-1"></i> Editar
+            </a>
+            <a href="{% url 'lista_historico_quilometragem' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-1"></i> Voltar para a Lista
+            </a>
+        </div>
+    </div>
+{% endblock %}

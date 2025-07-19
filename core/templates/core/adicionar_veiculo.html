@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if form.instance.pk %}Adicionar Veículo{% else %}Adicionar Veículo{% endif %}{% endblock %}
+
+{% block content %}
+    <h1>{% if form.instance.pk %}Editar Veículo{% else %}Adicionar Veículo{% endif %}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <a href="{% url 'lista_veiculos' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+{% endblock %}

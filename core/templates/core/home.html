@@ -1,0 +1,118 @@
+{% extends 'base.html' %} 
+
+{% block title %}Página Inicial - Locadora{% endblock %} 
+
+
+
+{% block content %}
+    <div class="jumbotron jumbotron-fluid bg-light p-4 mb-4 rounded-3">
+        <div class="container">
+            <h1 class="display-4">Bem-vindo ao Portal da Locadora !</h1>
+            <p class="lead">Aqui você tem um resumo rápido da sua locadora.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card text-white bg-primary shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-car me-2"></i> Total de Veículos</h5>
+                    <p class="card-text display-4">{{ total_veiculos }}</p>
+                    <a href="{% url 'lista_veiculos' %}" class="btn btn-outline-light btn-sm">Ver Detalhes</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card text-white bg-success shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-check-circle me-2"></i> Veículos Disponíveis</h5>
+                    <p class="card-text display-4">{{ veiculos_disponiveis }}</p>
+                    <a href="{% url 'lista_veiculos' %}?q=Disponível" class="btn btn-outline-light btn-sm">Filtrar</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card text-white bg-warning shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-key me-2"></i> Veículos Alugados</h5>
+                    <p class="card-text display-4">{{ veiculos_alugados }}</p>
+                    <a href="{% url 'lista_veiculos' %}?q=Alugado" class="btn btn-outline-light btn-sm">Filtrar</a>
+                </div>
+            </div>
+        </div>
+
+      
+        <div class="col-md-4 mb-4">
+            <div class="card text-white bg-info shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-users me-2"></i> Total de Clientes</h5>
+                    <p class="card-text display-4">{{ total_clientes }}</p>
+                    <a href="{% url 'lista_clientes' %}" class="btn btn-outline-light btn-sm">Ver Detalhes</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card text-white bg-danger shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-exclamation-triangle me-2"></i> Locações Ativas</h5>
+                    <p class="card-text display-4">{{ locacoes_ativas }}</p>
+                    <a href="{% url 'lista_locacoes' %}?q=Ativa" class="btn btn-outline-light btn-sm">Filtrar</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card text-dark bg-light shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-chart-line me-2"></i> Faturamento Mês Atual</h5>
+                    <p class="card-text display-4">R$ {{ faturamento_mes_atual|floatformat:2 }}</p>
+                    <a href="{% url 'relatorio_faturamento' %}" class="btn btn-outline-dark btn-sm">Ver Relatório</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card text-white bg-secondary shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-user-tie me-2"></i> Total de Funcionários</h5>
+                    <p class="card-text display-4">{{ total_funcionarios }}</p>
+                    <a href="{% url 'lista_funcionarios' %}" class="btn btn-outline-light btn-sm">Ver Detalhes</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card text-dark bg-light shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-building me-2"></i> Total de Agências</h5>
+                    <p class="card-text display-4">{{ total_agencias }}</p>
+                    <a href="{% url 'lista_agencias' %}" class="btn btn-outline-dark btn-sm">Ver Detalhes</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card text-white bg-dark shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-money-bill-wave me-2"></i> Pagamentos Pendentes</h5>
+                    <p class="card-text display-4">{{ pagamentos_pendentes }}</p>
+                    <a href="{% url 'lista_pagamentos' %}?q=Pendente" class="btn btn-outline-light btn-sm">Filtrar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+    <div class="mt-5 mb-3">
+        <h2 class="h4">Ações Rápidas</h2>
+        <div class="d-flex flex-wrap gap-2">
+            <a href="{% url 'adicionar_locacao' %}" class="btn btn-success"><i class="fas fa-plus-circle me-2"></i> Nova Locação</a>
+            <a href="{% url 'adicionar_cliente' %}" class="btn btn-info"><i class="fas fa-user-plus me-2"></i> Novo Cliente</a>
+            <a href="{% url 'adicionar_veiculo' %}" class="btn btn-warning"><i class="fas fa-plus me-2"></i> Novo Veículo</a>
+        </div>
+    </div>
+
+{% endblock %}

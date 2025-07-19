@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalhes do Acessório do Veículo #{{ veiculo_acessorio.id_veiculo_acessorio }}{% endblock %}
+
+{% block content %}
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h1 class="h4 mb-0">Detalhes do Acessório do Veículo #{{ veiculo_acessorio.id_veiculo_acessorio }}</h1>
+        </div>
+        <div class="card-body">
+            <p><strong>Veículo:</strong> 
+               <a href="{% url 'detalhes_veiculo' pk=veiculo_acessorio.veiculo.pk %}">
+                   {{ veiculo_acessorio.veiculo.marca }} {{ veiculo_acessorio.veiculo.modelo }} (Placa: {{ veiculo_acessorio.veiculo.placa }})
+               </a>
+            </p>
+            <p><strong>Acessório:</strong> 
+               <a href="{% url 'detalhes_acessorio' pk=veiculo_acessorio.acessorio.pk %}">
+                   {{ veiculo_acessorio.acessorio.nome_acessorio }} (R$ {{ veiculo_acessorio.acessorio.valor_diario|floatformat:2 }}/dia)
+               </a>
+            </p>
+            <p><strong>Quantidade:</strong> {{ veiculo_acessorio.quantidade }}</p>
+        </div>
+        <div class="card-footer d-flex justify-content-end">
+            <a href="{% url 'editar_veiculo_acessorio' pk=veiculo_acessorio.pk %}" class="btn btn-warning me-2">
+                <i class="fas fa-edit me-1"></i> Editar
+            </a>
+            <a href="{% url 'lista_veiculo_acessorios' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-1"></i> Voltar para a Lista
+            </a>
+        </div>
+    </div>
+{% endblock %}

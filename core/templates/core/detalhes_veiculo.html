@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalhes do Veículo{% endblock %}
+
+{% block content %}
+    <h1>Detalhes do Veículo</h1>
+    <p>Modelo: {{ veiculo.modelo }}</p>
+    <p>Ano: {{ veiculo.ano }}</p>
+    <p>Placa: {{ veiculo.placa }}</p>
+    <a href="{% url 'editar_veiculo' pk=veiculo.pk %}" class="btn btn-warning">Editar</a>
+    <a href="{% url 'lista_veiculos' %}" class="btn btn-secondary">Voltar</a>
+{% endblock %}

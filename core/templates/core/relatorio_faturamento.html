@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}Relatório de Faturamento Mensal{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0">Relatório de Faturamento Mensal</h1>
+    </div>
+
+    {# Formulário de Filtro por Ano/Mês #}
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header">
+            Filtros
+        </div>
+        <div class="card-body">
+            <form method="GET" action="{% url 'relatorio_faturamento' %}" class="row g-3 align-items-end">
+                <div class="col-md-4">
+                    <label for="ano" class="form-label">Ano:</label>
+                    <input type="number" class="form-control" id="ano" name="ano" value="{{ ano_selecionado|default:'' }}" placeholder="Ex: 2025">
+                </div>
+                <div class="col-md-4">
+                    <label for="mes" class="form-label">Mês:</label>
+                    <select class="form-select" id="mes" name="mes">
+                        <option value="">Todos os Meses</option>
+                        {% for m in "123456789101112"|make_list %} 
+                            <option value="{{ m }}" {% if mes_selecionado == m %}selected{% endif %}>
+                                {{ m|ljust:2 }} 
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary me-2">Aplicar Filtro</button>
+                    <a href="{% url 'relatorio_faturamento' %}" class="btn btn-outline-secondary">Limpar Filtro</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    {# Fim do Formulário de Filtro #}
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Faturamento Total:</h5>
+            <p class="card-text fs-4 text-success">R$ {{ faturamento_total|floatformat:2 }}</p>
+        </div>
+    </div>
+
+    <h2 class="h4 mt-5 mb-3">Faturamento Detalhado por Mês/Ano:</h2>
+    {% if faturamento_por_mes %}
+        <ul class="list-group">
+            {% for periodo, valor in faturamento_por_mes.items %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <strong>{{ periodo }}</strong>
+                    <span class="badge bg-primary rounded-pill">R$ {{ valor|floatformat:2 }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            Nenhum faturamento registrado no período selecionado.
+        </div>
+    {% endif %}
+
+{% endblock %}

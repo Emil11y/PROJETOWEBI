@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalhes da Agência: {{ agencia.nome_agencia }}{% endblock %}
+
+{% block content %}
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h1 class="h4 mb-0">Detalhes da Agência</h1>
+        </div>
+        <div class="card-body">
+            <p><strong>Nome da Agência:</strong> {{ agencia.nome_agencia }}</p>
+            <p><strong>Endereço:</strong> {{ agencia.endereco }}</p>
+            <p><strong>Cidade:</strong> {{ agencia.cidade }}</p>
+            <p><strong>Estado:</strong> {{ agencia.estado }}</p>
+            <p><strong>Telefone:</strong> {{ agencia.telefone }}</p>
+        </div>
+        <div class="card-footer d-flex justify-content-end">
+            <a href="{% url 'editar_agencia' pk=agencia.pk %}" class="btn btn-warning me-2">
+                <i class="fas fa-edit me-1"></i> Editar
+            </a>
+            <a href="{% url 'lista_agencias' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-1"></i> Voltar para a Lista
+            </a>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Clientes{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0">Clientes Cadastrados</h1>
+        <a href="{% url 'adicionar_cliente' %}" class="btn btn-primary">
+            <i class="fas fa-plus-circle me-2"></i> Adicionar Novo Cliente
+        </a>
+    </div>
+
+    {# NOVO: Formulário de Busca #}
+    <div class="mb-4">
+        <form class="d-flex" method="GET" action="{% url 'lista_clientes' %}">
+            <input class="form-control me-2" type="search" placeholder="Buscar por nome, CPF ou e-mail" aria-label="Search" name="q" value="{{ query|default:'' }}">
+            <button class="btn btn-outline-success" type="submit">Buscar</button>
+            {% if query %} {# Botão para limpar a busca se houver uma ativa #}
+                <a href="{% url 'lista_clientes' %}" class="btn btn-outline-secondary ms-2">Limpar Busca</a>
+            {% endif %}
+        </form>
+    </div>
+    {# Fim do Formulário de Busca #}
+
+    {% if clientes %}
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Nome Completo</th>
+                        <th>CPF</th>
+                        <th>Email</th>
+                        <th>Telefone</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cliente in clientes %}
+                    <tr>
+                        <td>{{ cliente.nome }} {{ cliente.sobrenome }}</td>
+                        <td>{{ cliente.cpf }}</td>
+                        <td>{{ cliente.email }}</td>
+                        <td>{{ cliente.telefone }}</td>
+                        <td>
+                            <a href="{% url 'detalhes_cliente' pk=cliente.pk %}" class="btn btn-info btn-sm me-1" title="Ver Detalhes">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a href="{% url 'editar_cliente' pk=cliente.pk %}" class="btn btn-warning btn-sm me-1" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="{% url 'excluir_cliente' pk=cliente.pk %}" class="btn btn-danger btn-sm" title="Excluir">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            {% if query %}
+                Nenhum cliente encontrado para a busca "{{ query }}".
+            {% else %}
+                Nenhum cliente cadastrado ainda. <a href="{% url 'adicionar_cliente' %}" class="alert-link">Adicionar o primeiro cliente?</a>
+            {% endif %}
+        </div>
+    {% endif %}
+
+{% endblock %}

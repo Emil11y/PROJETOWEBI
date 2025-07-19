@@ -1,0 +1,35 @@
+{# locadora_veiculos/templates/registration/login.html #}
+{% extends 'base.html' %}
+{% load crispy_forms_tags %} {# Para estilizar o formulário de login #}
+
+{% block title %}Login - Locadora{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white">
+                    <h3 class="card-title text-center mb-0">Login</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form|crispy }} {# O Django Forms fornecerá o formulário de login #}
+                        <input type="hidden" name="next" value="{{ next }}"> {# Importante para redirecionar após login #}
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">Entrar</button>
+                        </div>
+                    </form>
+                    {% if form.errors %}
+                        <div class="alert alert-danger mt-3">
+                            Seu nome de usuário e/ou senha não correspondem. Por favor, tente novamente.
+                        </div>
+                    {% endif %}
+                    <p class="text-center mt-3">
+                        <small><a href="{% url 'password_reset' %}" class="text-muted">Esqueceu sua senha?</a></small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
